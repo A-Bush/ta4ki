@@ -42,9 +42,9 @@ function handleError(res, reason, message, code) {
 
 // Get all users from DB
 app.get("/api/users", function (req, res) {
-  db.collection(CONTACTS_COLLECTION).find({}).toArray(function (err, docs) {
+  db.collection(USERS_COLLECTION).find({}).toArray(function (err, docs) {
     if (err) {
-      handleError(res, err.message, "Failed to get contacts.");
+      handleError(res, err.message, "Failed to get users.");
     } else {
       res.status(200).json(docs);
     }
