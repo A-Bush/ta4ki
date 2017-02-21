@@ -40,6 +40,23 @@ function handleError(res, reason, message, code) {
 // USERS API ROUTES HANDLING
 
 
+/*
+* User DB proto
+* {
+*   "_id": <ObjectID>,   auto
+*   "name": <string>,   required
+*   "email" <string>,
+*   "phone": <string>,   required
+*   "dateCreate": <date>,       auto
+*   "dateUpdate" <date>,    auto
+*   "ads": [
+*      ad_id_0 <string>,
+*      ad_id_1 <string>
+*   ]
+* }
+* */
+
+
 // Get all users from DB
 app.get("/api/users", function (req, res) {
   db.collection(USERS_COLLECTION).find({}).toArray(function (err, docs) {
@@ -56,9 +73,15 @@ app.get("/api/users", function (req, res) {
 app.post("/api/users", function (req, res) {
   var newUser = req.body;
 
+  newUser.date = new Date();
+
+
   if (!req.body.name) {
     handleError(res, "Invalid user input", "Must provide a name.", 400);
   }
+  // if (!req.body.phone) {
+  //   handleError(res, "Invalid user input", "Must provide a phone.", 400);
+  // }
 
   //TODO: add another required fields
 
@@ -78,11 +101,43 @@ app.post("/api/users", function (req, res) {
  *    DELETE: deletes user by id
  */
 
+
+
+// Get ONE user by ID
 app.get("/api/users/:id", function (req, res) {
+  db.collection(USERS_COLLECTION).findOne({ _id: new ObjectID(req.params.id) }, function(err, doc) {
+    if (err) {
+      handleError(res, err.message, "Failed to get user");
+    } else {
+      res.status(200).json(doc);
+    }
+  });
 });
 
+
+// Update ONE user by ID
 app.put("/api/users/:id", function (req, res) {
+  var updateUser = req.body;
+  delete updateUser._id;
+
+  db.collection(USERS_COLLECTION).updateOne({_id: new ObjectID(req.params.id)}, updateUser, function(err, user) {
+    if (err) {
+      handleError(res, err.message, "Failed to update user");
+    } else {
+      updateUser._id = req.params.id;
+      res.status(200).json(updateUser);
+    }
+  });
 });
 
+
+// Delete ONE user
 app.delete("/api/users/:id", function (req, res) {
+  db.collection(USERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
+    if (err) {
+      handleError(res, err.message, "Failed to delete user");
+    } else {
+      res.status(200).json(req.params.id);
+    }
+  });
 });
