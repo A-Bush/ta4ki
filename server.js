@@ -131,7 +131,7 @@ app.put("/api/users/:id", function (req, res) {
 });
 
 
-// Delete ONE user
+// Delete ONE user actually by ID
 app.delete("/api/users/:id", function (req, res) {
   db.collection(USERS_COLLECTION).deleteOne({_id: new ObjectID(req.params.id)}, function(err, result) {
     if (err) {
