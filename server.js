@@ -1,3 +1,6 @@
+/* add environment variables file only for development*/
+require('dotenv').config();
+
 var express = require("express");
 var bodyParser = require("body-parser");
 var mongodb = require("mongodb");
@@ -7,6 +10,11 @@ var USERS_COLLECTION = "users";
 
 var app = express();
 app.use(bodyParser.json());
+
+
+// Put build to /dist dir
+var distDir = __dirname + "/dist/";
+app.use(express.static(distDir));
 
 // Create a database variable outside of the database connection callback to reuse the connection pool in your app.
 var db;

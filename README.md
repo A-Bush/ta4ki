@@ -46,7 +46,7 @@ To get more help on the Angular CLI use `ng help` or go check out the [Angular C
 
 ### Test API
 
-Windows
+###### Windows
 ```bash
   # add user with POST
   curl -H "Content-type: application/json" -d "{\"name\":\"username\", \"email\":\"useremail\"}" http://<HEROKU_APP_ID>.herokuapp.com/api/users
@@ -65,10 +65,44 @@ Windows
   
 ```
 
-UNIX
+##### UNIX
 ```bash
   # add user with POST
   # use normal ' and " mixing
   curl -H 'Content-type: application/json' -d '{"name":"username", "email":"useremail"}' http://<HEROKU_APP_ID>.herokuapp.com/api/users
     
 ```
+
+
+### Some additions
+
+Don't forget add missing dependencies 
+
+```bash
+  npm install
+```
+
+Rename `sample.env` to `.env` and add environment variables (or leave them by default)
+Setup your development DataBase in `.env`
+
+```bash
+  MONGODB_URI=mongodb://localhost:27017
+```
+
+Create build
+
+```
+  ng build
+```
+
+- All compiled and NOT minified data now is in `./dist/` folder
+- DO NOT change files in this folder
+
+Start local server 
+
+```bash
+  npm start
+```
+
+Server is starting on `http://localhost:8080` or your HOST variable in `.env`
+

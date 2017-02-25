@@ -6,7 +6,7 @@ import { HttpModule } from '@angular/http';
 import { AppComponent } from './app.component';
 import {HeaderModule} from "./modules/header/header.module";
 import {FooterModule} from "./modules/footer/footer.module";
-import {BodyModule} from "./modules/main/body.module";
+// import {BodyModule} from "./modules/main/body.module";
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import {BodyModule} from "./modules/main/body.module";
     FormsModule,
     HttpModule,
     HeaderModule,
-    BodyModule,
+    // BodyModule,
     FooterModule
   ],
   providers: [],
